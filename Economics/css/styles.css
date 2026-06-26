@@ -190,6 +190,13 @@ footer p {
     color: #608080;
 }
 
+.abbreviations {
+    color: #80a0a0;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}
+
 @media (max-width: 768px) {
     .cards-grid {
         grid-template-columns: 1fr;
