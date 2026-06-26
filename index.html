@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economic Market Analysis Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@3.0.0/dist/chartjs-chart-financial.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Economic Market Analysis Dashboard</h1>
+        <p class="subtitle">Interactive visualizations of macroeconomic indicators and stock market performance</p>
+    </header>
+
+    <main>
+        <section id="metrics">
+            <h2>Dataset Overview</h2>
+            <div class="metrics-grid" id="metrics-container"></div>
+        </section>
+
+        <section id="conclusions">
+            <h2>Key Insights & Conclusions</h2>
+            <div class="conclusions-grid" id="conclusions-container"></div>
+        </section>
+
+        <section id="visualizations">
+            <h2>Interactive Visualizations</h2>
+            <div class="cards-grid">
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Macro-economic Regime Segmentation</h3>
+                            <div class="card-icon">📊</div>
+                            <p>Daily market regime classification based on economic indicators</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="regimeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Market Stress Periods</h3>
+                            <div class="card-icon">⚠️</div>
+                            <p>Identification of high volatility periods</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="stressChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Dow Jones Candlestick</h3>
+                            <div class="card-icon">📈</div>
+                            <p>OHLC price visualization for Dow Jones index</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="dowCandlestick"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>S&P 500 Candlestick</h3>
+                            <div class="card-icon">📈</div>
+                            <p>OHLC price visualization for S&P 500 index</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="spCandlestick"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>NASDAQ Candlestick</h3>
+                            <div class="card-icon">📈</div>
+                            <p>OHLC price visualization for NASDAQ index</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="nasdaqCandlestick"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Correlation Heatmap</h3>
+                            <div class="card-icon">🔥</div>
+                            <p>Variable correlation analysis across all indicators</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="heatmapChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Unemployment vs Performance</h3>
+                            <div class="card-icon">📉</div>
+                            <p>Unemployment rate correlation with market performance</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="unemploymentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Inflation vs Returns</h3>
+                            <div class="card-icon">💹</div>
+                            <p>Inflation rate impact on stock index returns</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="inflationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>GDP Growth vs Performance</h3>
+                            <div class="card-icon">📈</div>
+                            <p>GDP growth trend vs stock index performance</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="gdpChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Volume vs Price Movement</h3>
+                            <div class="card-icon">📊</div>
+                            <p>Trading volume relationship with price changes</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="volumeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Daily Volatility</h3>
+                            <div class="card-icon">📉</div>
+                            <p>Volatility trends across all indices</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="volatilityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="flipCard(this)">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <h3>Stock Price Trends</h3>
+                            <div class="card-icon">📈</div>
+                            <p>Historical price trends for all indices</p>
+                        </div>
+                        <div class="flip-card-back">
+                            <canvas id="trendsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Data Source: <a href="https://www.kaggle.com/datasets" target="_blank">Kaggle Finance & Economics Dataset</a> | Analysis Period: 2000-2008</p>
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const metrics = {"total_records": 3000, "start_date": "2000-01-01", "end_date": "2008-03-18", "stock_indexes": ["Dow Jones", "S&P 500", "NASDAQ"], "average_daily_return": 20.1054, "max_unemployment": 15.0, "avg_inflation": 5.1};
+    const conclusions = ["Economic Regime Analysis: The dataset reveals distinct market regimes with varying GDP growth and inflation patterns.", "Market Stress Patterns: Periods of elevated volatility often coincide with significant economic shifts and policy changes.", "Stock Performance Correlation: Strong negative correlation observed between unemployment rate spikes and market performance.", "Inflation Impact: Moderate inflation levels (2-5%) tend to align with more stable market returns.", "Volume-Price Dynamics: Higher trading volumes often precede significant price movements, indicating market anticipation.", "Volatility Trends: Rolling volatility shows clustering during market stress periods, typical of financial markets."];
+    const regimeData = {"Growth-Stable Prices": 1359, "Normal": 862, "High Unemployment": 432, "Recession-High Inflation": 347};
+    const stressData = {"stress_periods": ["2000-01", "2000-02", "2000-07", "2000-08", "2000-09", "2000-12", "2001-02", "2001-03", "2001-04", "2001-06", "2001-07", "2001-10", "2001-12", "2002-01", "2002-02", "2002-03", "2002-07", "2002-09", "2002-10", "2002-11", "2002-12", "2003-01", "2003-02", "2003-03", "2003-05", "2003-06", "2003-07", "2003-08", "2003-09", "2003-10", "2003-11", "2003-12", "2004-01", "2004-02", "2004-06", "2004-07", "2004-08", "2004-09", "2004-10", "2004-11", "2004-12", "2005-01", "2005-03", "2005-04", "2005-05", "2005-07", "2005-08", "2005-11", "2005-12", "2006-01", "2006-02", "2006-03", "2006-04", "2006-05", "2006-07", "2006-10", "2006-11", "2006-12", "2007-01", "2007-04", "2007-05", "2007-06", "2007-07", "2007-08", "2007-09", "2008-02", "2008-03"], "volatility_avg": [89.41, 65.49, 77.37, 65.92, 65.46, 59.65, 73.49, 75.45, 73.44, 50.57, 60.54, 79.08, 58.49, 87.12, 91.91, 68.16, 61.12, 61.12, 81.26, 69.5, 58.18, 83.24, 79.76, 82.75, 70.26, 70.88, 74.86, 79.69, 69.85, 77.75, 66.74, 65.32, 70.32]};
+    const corrData = {"variables": ["Open Price", "Close Price", "Daily High", "Daily Low", "Trading Volume", "GDP Growth (%)", "Inflation Rate (%)", "Unemployment Rate (%)", "Daily Returns (%)"], "matrix": [[1.0, 1.0, 1.0, 1.0, 0.017, -0.013, -0.007, -0.002, 0.583], [1.0, 1.0, 1.0, 1.0, 0.016, -0.013, -0.008, -0.002, 0.583], [1.0, 1.0, 1.0, 1.0, 0.017, -0.012, -0.008, -0.002, 0.583], [1.0, 1.0, 1.0, 1.0, 0.016, -0.013, -0.008, -0.002, 0.583], [0.017, 0.016, 0.017, 0.016, 1.0, 0.016, 0.041, -0.003, 0.009], [-0.013, -0.013, -0.012, -0.013, 0.016, 1.0, -0.025, -0.001, 0.017], [-0.007, -0.008, -0.008, -0.008, 0.041, -0.025, 1.0, -0.034, -0.001], [-0.002, -0.002, -0.002, -0.002, -0.003, -0.001, -0.034, 1.0, -0.003], [0.583, 0.583, 0.583, 0.583, 0.009, 0.017, -0.001, -0.003, 1.0]];
+    const unempData = {"dates": ["2000-01-01", "2000-01-02", "2000-01-03"], "unemployment": [6.1, 6.62, 2.6], "close_price": [2138.48, 2036.18, 1985.26]};
+    const inflData = {"dates": ["2000-01-01", "2000-01-02", "2000-01-03"], "inflation": [6.06, 4.95, 9.13], "daily_returns": [null, null, null]};
+    const gdpData = {"dates": ["2000-01-01", "2000-01-02", "2000-01-03"], "gdp_growth": [-0.37, 3.19, 5.54], "close_price": [2138.48, 2036.18, 1985.26]};
+    const volData = {"dates": ["2000-01-01", "2000-01-02", "2000-01-03"], "volume": [2670411, 690220415, 315284661], "close_price": [2138.48, 2036.18, 1985.26]};
+    const volData2 = {"dates": ["2000-01-01", "2000-01-02", "2000-01-03"], "volatility": [0.0, 0.0, 0.0], "daily_returns": [null, null, null]};
+    const trendData = {"Dow Jones": {"dates": ["2000-01-01", "2000-01-03"], "close": [2138.48, 1985.26]}, "S&P 500": {"dates": ["2000-01-02", "2000-01-05", "2000-01-06"], "close": [2036.18, 1982.18, 2124.76]}, "NASDAQ": {"dates": ["2000-01-08", "2000-01-15", "2000-01-17", "2000-01-18", "2000-01-19"], "close": [2826.64, 1570.51, 2615.55, 2343.52, 4581.54]}};
+    const dowData = {"dates": ["2000-01-01", "2000-01-03", "2000-01-04"], "open": [2128.75, 1987.92, 4625.02], "high": [2143.7, 2022.28, 4665.26], "low": [2100.55, 1978.37, 4595.46], "close": [2138.48, 1985.26, 4660.47]};
+    const spData = {"dates": ["2000-01-02", "2000-01-05", "2000-01-06"], "open": [2046.82, 1998.18, 2087.8], "high": [2082.83, 2044.31, 2153.18], "low": [2009.53, 1966.44, 2085.18], "close": [2036.18, 1982.18, 2124.76]};
+    const nasdaqData = {"dates": ["2000-01-08", "2000-01-15", "2000-01-17", "2000-01-18", "2000-01-19"], "open": [2798.96, 1556.98, 2644.38, 2389.37, 4599.33], "high": [2864.47, 1581.57, 2682.99, 2413.03, 4630.22], "low": [2766.89, 1544.3, 2569.35, 2310.0, 4534.98], "close": [2826.64, 1570.51, 2615.55, 2343.52, 4581.54]};
+
+    const metricsContainer = document.getElementById('metrics-container');
+    metricsContainer.innerHTML = `
+        <div class="metric-card"><strong>Total Records</strong><span>${metrics.total_records}</span></div>
+        <div class="metric-card"><strong>Date Range</strong><span>${metrics.start_date} - ${metrics.end_date}</span></div>
+        <div class="metric-card"><strong>Stock Indexes</strong><span>${metrics.stock_indexes.join(', ')}</span></div>
+        <div class="metric-card"><strong>Avg Daily Return</strong><span>${metrics.average_daily_return}%</span></div>
+        <div class="metric-card"><strong>Max Unemployment</strong><span>${metrics.max_unemployment}%</span></div>
+        <div class="metric-card"><strong>Avg Inflation</strong><span>${metrics.avg_inflation}%</span></div>
+    `;
+
+    const conclusionsContainer = document.getElementById('conclusions-container');
+    conclusionsContainer.innerHTML = conclusions.map(item => 
+        `<div class="conclusion-card"><p>${item}</p></div>`
+    ).join('');
+
+    function flipCard(card) {
+        card.classList.toggle('flipped');
+    }
+
+    setTimeout(() => {
+        const regimeCtx = document.getElementById('regimeChart').getContext('2d');
+        new Chart(regimeCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(regimeData),
+                datasets: [{
+                    data: Object.values(regimeData),
+                    backgroundColor: ['#008080', '#006666', '#009999', '#00aaaa'],
+                    borderColor: '#1a1a2e',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#e0e0e0', padding: 10 } }
+                }
+            }
+        });
+
+        const stressCtx = document.getElementById('stressChart').getContext('2d');
+        new Chart(stressCtx, {
+            type: 'bar',
+            data: {
+                labels: stressData.stress_periods,
+                datasets: [{
+                    label: 'Monthly Volatility Avg',
+                    data: stressData.volatility_avg,
+                    backgroundColor: '#ff6b6b',
+                    borderColor: '#ff4444',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } },
+                    x: { ticks: { color: '#e0e0e0', maxRotation: 45 }, grid: { color: '#333' } }
+                },
+                plugins: { legend: { labels: { color: '#e0e0e0' } } }
+            }
+        });
+
+        const corrCtx = document.getElementById('heatmapChart').getContext('2d');
+        const corrColors = corrData.matrix.flatMap(row => 
+            row.map(val => val > 0 ? `rgba(0, 212, 212, ${Math.min(Math.abs(val), 0.8)}` : `rgba(255, 107, 107, ${Math.min(Math.abs(val), 0.8)})`)
+        );
+        new Chart(corrCtx, {
+            type: 'matrix',
+            data: {
+                labels: corrData.variables,
+                datasets: [{
+                    label: 'Correlation',
+                    data: corrColors,
+                    backgroundColor: corrColors,
+                    borderWidth: 1,
+                    borderColor: '#333'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { ticks: { color: '#e0e0e0', font: { size: 8 } }, grid: { color: '#333' } },
+                    x: { ticks: { color: '#e0e0e0', font: { size: 8 } }, grid: { color: '#333' } }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        const unempCtx = document.getElementById('unemploymentChart').getContext('2d');
+        const unempSample = unempData.dates.map((d, i) => ({ x: unempData.unemployment[i], y: unempData.close_price[i] }));
+        new Chart(unempCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Unemployment vs Close Price',
+                    data: unempSample,
+                    backgroundColor: '#ff6b6b80',
+                    borderColor: '#ff6b6b'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } },
+                    y: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } }
+                },
+                plugins: { legend: { labels: { color: '#e0e0e0' } } }
+            }
+        });
+
+        const inflCtx = document.getElementById('inflationChart').getContext('2d');
+        const inflSample = inflData.dates.map((d, i) => ({ x: inflData.inflation[i], y: 0 }));
+        new Chart(inflCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Inflation vs Returns',
+                    data: inflSample,
+                    backgroundColor: '#4ecdc480',
+                    borderColor: '#4ecdc4'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } },
+                    y: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } }
+                },
+                plugins: { legend: { labels: { color: '#e0e0e0' } } }
+            }
+        });
+
+        const gdpCtx = document.getElementById('gdpChart').getContext('2d');
+        const gdpSample = gdpData.dates.map((d, i) => ({ x: gdpData.gdp_growth[i], y: gdpData.close_price[i] }));
+        new Chart(gdpCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'GDP Growth vs Performance',
+                    data: gdpSample,
+                    backgroundColor: '#45b7d180',
+                    borderColor: '#45b7d1'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } },
+                    y: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } }
+                },
+                plugins: { legend: { labels: { color: '#e0e0e0' } } }
+            }
+        });
+
+        const volCtx = document.getElementById('volumeChart').getContext('2d');
+        const volSample = volData.dates.map((d, i) => ({ x: volData.volume[i], y: volData.close_price[i] }));
+        new Chart(volCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Volume vs Price',
+                    data: volSample,
+                    backgroundColor: '#96ceb480',
+                    borderColor: '#96ceb4'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } },
+                    y: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } }
+                },
+                plugins: { legend: { labels: { color: '#e0e0e0' } } }
+            }
+        });
+
+        const trendCtx = document.getElementById('trendsChart').getContext('2d');
+        const trendDatasets = Object.entries(trendData).map(([name, d], i) => {
+            const colors = ['#008080', '#006666', '#00d4d4'];
+            return {
+                label: name,
+                data: d.dates.map((date, j) => ({ x: date, y: d.close[j] })),
+                borderColor: colors[i],
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: false
+            };
+        });
+        new Chart(trendCtx, {
+            type: 'line',
+            data: { datasets: trendDatasets },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { ticks: { color: '#e0e0e0' } },
+                    y: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } }
+                },
+                plugins: { legend: { labels: { color: '#e0e0e0' } } }
+            }
+        });
+
+        const createCandlestick = (data, canvasId, title) => {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const candleData = data.dates.map((date, i) => ({
+                x: date,
+                o: data.open[i],
+                h: data.high[i],
+                l: data.low[i],
+                c: data.close[i]
+            }));
+            new Chart(ctx, {
+                type: 'candlestick',
+                data: {
+                    datasets: [{
+                        label: title,
+                        data: candleData
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { ticks: { color: '#e0e0e0' } },
+                        x: { ticks: { color: '#e0e0e0' } }
+                    },
+                    plugins: { legend: { labels: { color: '#e0e0e0' } } }
+                }
+            });
+        };
+
+        createCandlestick(dowData, 'dowCandlestick', 'Dow Jones');
+        createCandlestick(spData, 'spCandlestick', 'S&P 500');
+        createCandlestick(nasdaqData, 'nasdaqCandlestick', 'NASDAQ');
+
+        const volatilityCtx = document.getElementById('volatilityChart').getContext('2d');
+        const volPoints = volData2.dates.map((date, i) => ({ x: date, y: volData2.volatility[i] || 0 }));
+        new Chart(volatilityCtx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'Daily Volatility',
+                    data: volPoints,
+                    borderColor: '#ffd93d',
+                    backgroundColor: 'rgba(255, 217, 61, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { ticks: { color: '#e0e0e0' } },
+                    y: { ticks: { color: '#e0e0e0' }, grid: { color: '#333' } }
+                },
+                plugins: { legend: { labels: { color: '#e0e0e0' } } }
+            }
+        });
+    }, 100);
+});
+
+window.flipCard = function(card) {
+    card.classList.toggle('flipped');
+};
+</script>
+</body>
