@@ -102,15 +102,15 @@ h3 {
 
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
     perspective: 1000px;
 }
 
 .flip-card {
     background-color: transparent;
     cursor: pointer;
-    height: 180px;
+    height: 280px;
     position: relative;
 }
 
@@ -150,12 +150,16 @@ h3 {
     transform: rotateY(180deg);
     overflow: hidden;
     padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .flip-card-back canvas {
     width: 100% !important;
     height: 100% !important;
-    min-height: 180px;
+    min-height: 280px;
+    display: block;
 }
 
 .card-icon {
